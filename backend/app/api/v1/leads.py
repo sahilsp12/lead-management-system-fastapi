@@ -1,3 +1,4 @@
+from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
@@ -5,12 +6,70 @@ from app.core.database import get_db
 from app.core.dependencies import get_current_user, RoleChecker
 from app.models.user import User
 from app.models.lead import Lead
-from app.schemas.lead import LeadCreate, LeadOut, LeadUpdate
+from app.schemas.lead import LeadCreate, LeadOut, LeadUpdate, LeadPagination
 
 router = APIRouter(prefix="/leads", tags=["Leads"])
 
 # Dependencies for role validation
 manager_or_admin = RoleChecker(["Manager", "Admin"])
+
+
+@router.get("/", response_model=LeadPagination)
+def list_leads(
+    page: int = 1,
+    limit: int = 10,
+    search: Optional[str] = None,
+    sort_by: str = "created_at",
+    sort_dir: str = "desc",
+    status_filter: Optional[str] = None,
+    source_filter: Optional[str] = None,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """Retrieve a paginated list of leads, applying search, sorting, filters, and role-based access checks."""
+    query = db.query(Lead)
+
+    # 1. Role Authorization Checks: Agents can only view leads assigned to them
+    if current_user.role == "Agent":
+        query = query.filter(Lead.assigned_to == current_user.id)
+
+    # 2. Filters
+    if status_filter:
+        query = query.filter(Lead.status == status_filter)
+    if source_filter:
+        query = query.filter(Lead.source == source_filter)
+
+    # 3. Search (by name, email, or phone)
+    if search:
+        search_pattern = f"%{search}%"
+        query = query.filter(
+            (Lead.name.like(search_pattern)) |
+            (Lead.email.like(search_pattern)) |
+            (Lead.phone.like(search_pattern))
+        )
+
+    # 4. Sorting
+    sort_col = Lead.created_at
+    if sort_by == "name":
+        sort_col = Lead.name
+        
+    if sort_dir == "asc":
+        query = query.order_by(sort_col.asc())
+    else:
+        query = query.order_by(sort_col.desc())
+
+    # 5. Pagination
+    total = query.count()
+    offset = (page - 1) * limit
+    leads = query.offset(offset).limit(limit).all()
+
+    return {
+        "total": total,
+        "page": page,
+        "limit": limit,
+        "pages": (total + limit - 1) // limit or 1,
+        "leads": leads
+    }
 
 
 @router.post("/", response_model=LeadOut, status_code=status.HTTP_201_CREATED)

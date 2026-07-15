@@ -35,3 +35,12 @@ class LeadOut(LeadBase):
 
     class Config:
         from_attributes = True
+
+
+class LeadPagination(BaseModel):
+    total: int
+    page: int
+    limit: int
+    pages: int
+    leads: list[LeadOut]
+

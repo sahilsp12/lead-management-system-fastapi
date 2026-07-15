@@ -1,14 +1,27 @@
 from fastapi import FastAPI
+from sqlalchemy import text
+
+from app.core.database import engine
 
 app = FastAPI(
     title="Lead Management System API",
-    version="1.0.0",
-    description="Backend Assessment using FastAPI"
+    version="1.0.0"
 )
+
 
 @app.get("/")
 def root():
-    return {
-        "success": True,
-        "message": "Lead Management System API is running 🚀"
-    }
+    try:
+        with engine.connect() as connection:
+            connection.execute(text("SELECT 1"))
+
+        return {
+            "success": True,
+            "message": "Database Connected Successfully ✅"
+        }
+
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e)
+        }

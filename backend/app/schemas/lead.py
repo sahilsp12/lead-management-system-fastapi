@@ -26,12 +26,25 @@ class LeadUpdate(BaseModel):
     assigned_to: Optional[int] = None
 
 
+class ActivityLogOut(BaseModel):
+    id: int
+    lead_id: int
+    user_id: Optional[int] = None
+    action: str
+    description: str
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
 class LeadOut(LeadBase):
     id: int
     assigned_to: Optional[int] = None
     created_by: Optional[int] = None
     created_at: datetime
     updated_at: datetime
+    activities: list[ActivityLogOut] = []
 
     class Config:
         from_attributes = True

@@ -12,9 +12,7 @@ import LeadDetails from './pages/LeadDetails';
 import LeadForm from './pages/LeadForm';
 import UserManagement from './pages/UserManagement';
 
-// Import Bootstrap CSS and Icons
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
+
 
 function App() {
   return (

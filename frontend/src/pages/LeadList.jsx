@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
 import { AuthContext } from '../context/AuthContext';
+import { getErrorMessage } from '../utils/errors';
 
 const LeadList = () => {
   const { user } = useContext(AuthContext);
@@ -71,7 +72,7 @@ const LeadList = () => {
         await api.delete(`/leads/${id}`);
         fetchLeads();
       } catch (err) {
-        alert(err.response?.data?.detail || 'Failed to delete lead.');
+        alert(getErrorMessage(err));
       }
     }
   };

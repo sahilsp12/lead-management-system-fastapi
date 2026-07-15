@@ -118,6 +118,27 @@ def create_lead(
     return new_lead
 
 
+@router.get("/import-random")
+def import_random_lead(
+    current_user: User = Depends(manager_or_admin)
+):
+    """Fetch a random user profile from Random User API without creating a database record."""
+    random_user = fetch_random_user_data()
+    if not random_user:
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail="Failed to fetch user data from external API"
+        )
+    
+    return {
+        "name": random_user["name"],
+        "email": random_user["email"],
+        "phone": random_user["phone"],
+        "source": "External API",
+        "notes": f"Auto-imported from Random User API. Location: {random_user['location']}."
+    }
+
+
 @router.get("/{lead_id}", response_model=LeadOut)
 def get_lead(
     lead_id: int,
@@ -263,52 +284,4 @@ def delete_lead(
     db.delete(lead)
     db.commit()
     return
-
-
-@router.post("/import-random", response_model=LeadOut, status_code=status.HTTP_201_CREATED)
-def import_random_lead(
-    db: Session = Depends(get_db),
-    current_user: User = Depends(manager_or_admin)
-):
-    """Fetch a random user profile from Random User API and create/assign a lead."""
-    random_user = fetch_random_user_data()
-    if not random_user:
-        raise HTTPException(
-            status_code=status.HTTP_502_BAD_GATEWAY,
-            detail="Failed to fetch user data from external API"
-        )
-    
-    assigned_agent_id = get_next_agent_for_assignment(db)
-    
-    new_lead = Lead(
-        name=random_user["name"],
-        email=random_user["email"],
-        phone=random_user["phone"],
-        source="External API",
-        status="NEW",
-        notes=f"Auto-imported from Random User API. Location: {random_user['location']}.",
-        created_by=current_user.id,
-        assigned_to=assigned_agent_id
-    )
-    
-    db.add(new_lead)
-    db.commit()
-    db.refresh(new_lead)
-    
-    # Log Lead Created Activity
-    agent_name = "Unassigned"
-    if assigned_agent_id:
-        agent = db.query(User).filter(User.id == assigned_agent_id).first()
-        if agent:
-            agent_name = agent.name
-            
-    log_activity(
-        db,
-        lead_id=new_lead.id,
-        user_id=current_user.id,
-        action="Lead Created",
-        description=f"Lead imported from external API by {current_user.name} and auto-assigned to {agent_name}."
-    )
-    
-    return new_lead
 

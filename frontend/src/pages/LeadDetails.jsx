@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { AuthContext } from '../context/AuthContext';
+import { getErrorMessage } from '../utils/errors';
 
 const LeadDetails = () => {
   const { leadId } = useParams();
@@ -54,7 +55,7 @@ const LeadDetails = () => {
         setAgentName('Unassigned');
       }
     } catch (err) {
-      setError(err.response?.data?.detail || 'Failed to fetch lead details.');
+      setError(getErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -66,7 +67,7 @@ const LeadDetails = () => {
         await api.delete(`/leads/${leadId}`);
         navigate('/leads');
       } catch (err) {
-        alert(err.response?.data?.detail || 'Failed to delete lead.');
+        alert(getErrorMessage(err));
       }
     }
   };

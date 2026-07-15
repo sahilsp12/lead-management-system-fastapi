@@ -12,14 +12,14 @@
   --text-main: #334155;
   --text-heading: #0f172a;
   --text-muted: #64748b;
-  --border-color: #e2e8f0;
+  --border-color: #cbd5e1;
   
   --primary-color: #4f46e5;     /* Indigo */
   --primary-hover: #4338ca;
   --success-color: #10b981;     /* Emerald */
-  --warning-color: #f59e0b;     /* Amber */
-  --danger-color: #ef4444;      /* Rose */
-  --info-color: #06b6d4;        /* Cyan */
+  --warning-color: #d97706;     /* Amber (slightly darker for light theme contrast) */
+  --danger-color: #dc2626;      /* Rose/Red */
+  --info-color: #0891b2;        /* Cyan */
   
   /* Shadow & Radius Tokens */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -35,7 +35,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     /* Dark Theme Colors */
-    --bg-primary: #0f172a;      /* Dark slate */
+    --bg-primary: #0f172a;      /* Dark slate background */
     --bg-card: #1e293b;         /* Slate card background */
     --text-main: #cbd5e1;       /* Light grey main text */
     --text-heading: #f8fafc;    /* White title text */
@@ -44,6 +44,10 @@
     
     --primary-color: #818cf8;   /* Soft indigo */
     --primary-hover: #6366f1;
+    --success-color: #34d399;   /* Bright emerald */
+    --warning-color: #fbbf24;   /* Bright amber */
+    --danger-color: #f87171;    /* Soft red */
+    --info-color: #22d3ee;      /* Soft cyan */
     
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
@@ -108,7 +112,8 @@
   }
 
   .form-control::placeholder {
-    color: #64748b !important;
+    color: var(--text-muted) !important;
+    opacity: 0.6 !important;
   }
 
   /* Buttons styling overrides */
@@ -138,18 +143,19 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-  font-weight: 600;
-  color: var(--text-heading);
+  font-weight: 700;
+  color: var(--text-heading) !important;
   letter-spacing: -0.025em;
 }
 
 a {
-  color: var(--primary-color);
+  color: var(--primary-color) !important;
+  text-decoration: none;
   transition: var(--transition-smooth);
 }
 
 a:hover {
-  color: var(--primary-hover);
+  color: var(--primary-hover) !important;
 }
 
 /* Custom Scrollbars */
@@ -185,8 +191,13 @@ a:hover {
   color: var(--primary-color) !important;
 }
 
+.navbar-text, .navbar span {
+  color: var(--text-main) !important;
+}
+
 /* Sidebar Panel */
 .bg-light.border-end {
+  background-color: var(--bg-card) !important;
   border-color: var(--border-color) !important;
 }
 
@@ -222,7 +233,7 @@ a:hover {
   border: 1px solid var(--border-color) !important;
   border-radius: var(--radius-md) !important;
   box-shadow: var(--shadow-sm) !important;
-  color: var(--text-main);
+  color: var(--text-main) !important;
   transition: var(--transition-smooth);
 }
 
@@ -234,16 +245,21 @@ a:hover {
   background-color: rgba(0, 0, 0, 0.01) !important;
   border-bottom: 1px solid var(--border-color) !important;
   padding: 1.25rem 1.5rem !important;
+  color: var(--text-heading) !important;
 }
 
 .card-body {
   padding: 1.5rem !important;
 }
 
+.card-title {
+  color: var(--text-heading) !important;
+}
+
 /* Forms & Input Elements */
 .form-label, label {
   font-weight: 500;
-  color: var(--text-heading);
+  color: var(--text-heading) !important;
   font-size: 0.9rem;
   margin-bottom: 0.5rem;
 }
@@ -253,13 +269,28 @@ a:hover {
   border: 1px solid var(--border-color) !important;
   padding: 0.625rem 0.875rem !important;
   font-size: 0.95rem !important;
-  color: var(--text-heading);
+  color: var(--text-heading) !important;
+  background-color: var(--bg-card) !important;
   transition: var(--transition-smooth) !important;
 }
 
 .form-control:focus, .form-select:focus {
   border-color: var(--primary-color) !important;
   box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15) !important;
+  background-color: var(--bg-card) !important;
+  color: var(--text-heading) !important;
+}
+
+.form-control::placeholder {
+  color: var(--text-muted) !important;
+  opacity: 0.7 !important;
+}
+
+/* Validation Feedback */
+.invalid-feedback {
+  color: var(--danger-color) !important;
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
 }
 
 /* Buttons Styles */
@@ -327,7 +358,7 @@ a:hover {
   text-transform: uppercase;
   font-size: 0.75rem;
   letter-spacing: 0.05em;
-  color: var(--text-muted);
+  color: var(--text-muted) !important;
   border-bottom: 2px solid var(--border-color) !important;
   padding: 1rem 1.5rem !important;
 }
@@ -335,6 +366,7 @@ a:hover {
 .table td {
   padding: 1rem 1.5rem !important;
   border-bottom: 1px solid var(--border-color) !important;
+  color: var(--text-main) !important;
 }
 
 .table tbody tr {
@@ -440,4 +472,9 @@ a:hover {
   position: relative;
   padding-left: 20px;
   border-left: 2px solid var(--border-color);
+}
+
+/* Empty States & Text Utility Overrides */
+.text-muted {
+  color: var(--text-muted) !important;
 }

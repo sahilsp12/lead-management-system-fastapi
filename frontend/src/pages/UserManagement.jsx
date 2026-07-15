@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '../services/api';
+import { getErrorMessage } from '../utils/errors';
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
@@ -45,7 +46,7 @@ const UserManagement = () => {
       setRole('Agent');
       fetchUsers();
     } catch (err) {
-      setError(err.response?.data?.detail || 'Failed to create user.');
+      setError(getErrorMessage(err));
     } finally {
       setSubmitting(false);
     }
@@ -58,7 +59,7 @@ const UserManagement = () => {
         setSuccess('User deleted successfully.');
         fetchUsers();
       } catch (err) {
-        setError(err.response?.data?.detail || 'Failed to delete user.');
+        setError(getErrorMessage(err));
       }
     }
   };

@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import api from '../services/api';
 import { AuthContext } from '../context/AuthContext';
+import { getErrorMessage } from '../utils/errors';
 
 const LeadForm = () => {
   const { leadId } = useParams(); // undefined if creating
@@ -121,7 +122,7 @@ const LeadForm = () => {
         navigate(`/leads/${response.data.id}`);
       }
     } catch (err) {
-      setError(err.response?.data?.detail || 'An error occurred while saving the lead.');
+      setError(getErrorMessage(err));
     } finally {
       setSubmitting(false);
     }
@@ -133,10 +134,16 @@ const LeadForm = () => {
     setImporting(true);
 
     try {
-      const response = await api.post('/leads/import-random');
-      navigate(`/leads/${response.data.id}`);
+      const response = await api.get('/leads/import-random');
+      const data = response.data;
+      
+      setName(data.name || '');
+      setEmail(data.email || '');
+      setPhone(data.phone || '');
+      setSource(data.source || 'External API');
+      setNotes(data.notes || '');
     } catch (err) {
-      setError(err.response?.data?.detail || 'Failed to import random lead from external API.');
+      setError(getErrorMessage(err));
     } finally {
       setImporting(false);
     }

@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import api from '../services/api';
+import { getErrorMessage } from '../utils/errors';
 
 export const AuthContext = createContext();
 
@@ -35,8 +36,7 @@ export const AuthProvider = ({ children }) => {
       setUser(userData);
       return { success: true };
     } catch (error) {
-      const message = error.response?.data?.detail || 'Login failed. Please check credentials.';
-      return { success: false, error: message };
+      return { success: false, error: getErrorMessage(error) };
     }
   };
 
@@ -45,8 +45,7 @@ export const AuthProvider = ({ children }) => {
       await api.post('/auth/register', { name, email, password, role });
       return { success: true };
     } catch (error) {
-      const message = error.response?.data?.detail || 'Registration failed.';
-      return { success: false, error: message };
+      return { success: false, error: getErrorMessage(error) };
     }
   };
 

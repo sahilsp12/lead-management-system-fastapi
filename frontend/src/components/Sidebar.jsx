@@ -14,7 +14,7 @@ const Sidebar = () => {
           <li className="nav-item mb-2">
             <NavLink
               to="/"
-              className={({ isActive }) => `nav-link ${isActive ? 'active' : 'text-dark'}`}
+              className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
               end
             >
               <i className="bi bi-speedometer2 me-2"></i>
@@ -24,7 +24,7 @@ const Sidebar = () => {
           <li className="nav-item mb-2">
             <NavLink
               to="/leads"
-              className={({ isActive }) => `nav-link ${isActive ? 'active' : 'text-dark'}`}
+              className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
             >
               <i className="bi bi-list-task me-2"></i>
               Leads List
@@ -35,7 +35,7 @@ const Sidebar = () => {
             <li className="nav-item mb-2">
               <NavLink
                 to="/leads/new"
-                className={({ isActive }) => `nav-link ${isActive ? 'active' : 'text-dark'}`}
+                className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
               >
                 <i className="bi bi-plus-circle me-2"></i>
                 Create Lead
@@ -47,7 +47,7 @@ const Sidebar = () => {
             <li className="nav-item mb-2">
               <NavLink
                 to="/users"
-                className={({ isActive }) => `nav-link ${isActive ? 'active' : 'text-dark'}`}
+                className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
               >
                 <i className="bi bi-people me-2"></i>
                 Manage Users

@@ -47,53 +47,120 @@
     color: var(--text-main) !important;
   }
 
-  /* Force Bootstrap class overrides in dark mode */
-  .text-muted {
-    color: var(--text-muted) !important;
+  /* Force background overrides in dark mode */
+  .bg-light, .bg-light-subtle, .bg-body-secondary {
+    background-color: var(--bg-primary) !important;
   }
 
-  .form-label, label {
+  .border-end, .border-bottom, .border {
+    border-color: var(--border-color) !important;
+  }
+
+  /* Sidebar styling overrides */
+  .bg-light.border-end {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-color) !important;
+  }
+
+  .nav-link {
+    color: var(--text-main) !important;
+  }
+
+  .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.05) !important;
     color: var(--text-heading) !important;
   }
 
+  /* Card styling overrides */
+  .card {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-main) !important;
+  }
+
+  .card-header {
+    background-color: rgba(255, 255, 255, 0.02) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    color: var(--text-heading) !important;
+  }
+
+  /* Force headings to render in light color */
+  h1, h2, h3, h4, h5, h6, .card-title, .card-header {
+    color: var(--text-heading) !important;
+  }
+
+  /* Text colors overrides */
+  .text-muted, .text-black-50 {
+    color: var(--text-muted) !important;
+  }
+
+  .text-dark {
+    color: var(--text-heading) !important;
+  }
+
+  .text-secondary {
+    color: var(--text-muted) !important;
+  }
+
+  /* Table overrides */
+  .table {
+    color: var(--text-main) !important;
+    --bs-table-bg: var(--bg-card) !important;
+    --bs-table-hover-bg: #1e293b !important;
+  }
+
+  .table th {
+    background-color: rgba(255, 255, 255, 0.02) !important;
+    color: var(--text-muted) !important;
+    border-bottom-color: var(--border-color) !important;
+  }
+
+  .table td {
+    border-bottom-color: var(--border-color) !important;
+    color: var(--text-main) !important;
+  }
+
+  .table-light {
+    background-color: var(--border-color) !important;
+    color: var(--text-heading) !important;
+  }
+
+  /* Inputs overrides */
   .form-control, .form-select {
-    background-color: #1e293b !important;
-    color: #f8fafc !important;
-    border-color: #334155 !important;
+    background-color: var(--bg-primary) !important;
+    color: var(--text-heading) !important;
+    border-color: var(--border-color) !important;
   }
 
   .form-control:focus, .form-select:focus {
-    background-color: #1e293b !important;
-    color: #f8fafc !important;
+    background-color: var(--bg-primary) !important;
+    color: var(--text-heading) !important;
   }
 
   .form-control::placeholder {
     color: #64748b !important;
   }
 
-  .card-header, .card-title, h1, h2, h3, h4, h5, h6 {
-    color: var(--text-heading) !important;
-  }
-
-  .bg-light, .table-light {
+  /* Buttons overrides */
+  .btn-light {
     background-color: #334155 !important;
+    border-color: #334155 !important;
     color: var(--text-heading) !important;
   }
 
-  .table {
+  .btn-light:hover {
+    background-color: #475569 !important;
+    border-color: #475569 !important;
+  }
+
+  .btn-outline-secondary {
     color: var(--text-main) !important;
-  }
-
-  .table tbody tr:hover {
-    background-color: #1f2937 !important;
-  }
-
-  .border-end, .border-bottom, .border {
     border-color: var(--border-color) !important;
   }
-  
-  .bg-light-subtle {
-    background-color: #0f172a !important;
+
+  .btn-outline-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    color: var(--text-heading) !important;
   }
 }
 

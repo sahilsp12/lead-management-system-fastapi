@@ -34,12 +34,66 @@
   :root {
     --bg-primary: #0f172a;
     --bg-card: #1e293b;
-    --text-main: #94a3b8;
+    --text-main: #cbd5e1;
     --text-heading: #f8fafc;
-    --text-muted: #64748b;
+    --text-muted: #94a3b8;
     --border-color: #334155;
     --primary-color: #818cf8;
     --primary-hover: #6366f1;
+  }
+
+  body {
+    background-color: var(--bg-primary) !important;
+    color: var(--text-main) !important;
+  }
+
+  /* Force Bootstrap class overrides in dark mode */
+  .text-muted {
+    color: var(--text-muted) !important;
+  }
+
+  .form-label, label {
+    color: var(--text-heading) !important;
+  }
+
+  .form-control, .form-select {
+    background-color: #1e293b !important;
+    color: #f8fafc !important;
+    border-color: #334155 !important;
+  }
+
+  .form-control:focus, .form-select:focus {
+    background-color: #1e293b !important;
+    color: #f8fafc !important;
+  }
+
+  .form-control::placeholder {
+    color: #64748b !important;
+  }
+
+  .card-header, .card-title, h1, h2, h3, h4, h5, h6 {
+    color: var(--text-heading) !important;
+  }
+
+  .bg-light, .table-light {
+    background-color: #334155 !important;
+    color: var(--text-heading) !important;
+  }
+
+  .table {
+    color: var(--text-main) !important;
+  }
+
+  .table tbody tr:hover {
+    background-color: #1f2937 !important;
+  }
+
+  .border-end, .border-bottom, .border {
+    border-color: var(--border-color) !important;
+  }
+  
+  .bg-light-subtle {
+    background-color: #0f172a !important;
   }
 }
 

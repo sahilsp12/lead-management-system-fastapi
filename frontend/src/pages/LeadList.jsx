@@ -10,7 +10,6 @@ const LeadList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // Filtering, Sorting, Pagination States
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [sourceFilter, setSourceFilter] = useState('');
@@ -21,7 +20,6 @@ const LeadList = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [totalLeads, setTotalLeads] = useState(0);
 
-  // Trigger search on submit or debounce
   useEffect(() => {
     fetchLeads();
   }, [page, statusFilter, sourceFilter, sortBy, sortDir]);
@@ -91,10 +89,10 @@ const LeadList = () => {
         )}
       </div>
 
-      {/* Filters and Search Bar */}
+      {}
       <div className="card shadow-sm border-0 mb-4 p-3">
         <form onSubmit={handleSearchSubmit} className="row g-3">
-          {/* Search Field */}
+          {}
           <div className="col-12 col-md-4">
             <div className="input-group">
               <input
@@ -110,7 +108,7 @@ const LeadList = () => {
             </div>
           </div>
 
-          {/* Status Filter */}
+          {}
           <div className="col-6 col-sm-4 col-md-2">
             <select
               className="form-select"
@@ -129,7 +127,7 @@ const LeadList = () => {
             </select>
           </div>
 
-          {/* Source Filter */}
+          {}
           <div className="col-6 col-sm-4 col-md-2">
             <select
               className="form-select"
@@ -147,7 +145,7 @@ const LeadList = () => {
             </select>
           </div>
 
-          {/* Sort Column */}
+          {}
           <div className="col-6 col-sm-4 col-md-2">
             <select
               className="form-select"
@@ -162,7 +160,7 @@ const LeadList = () => {
             </select>
           </div>
 
-          {/* Sort Direction */}
+          {}
           <div className="col-6 col-sm-4 col-md-1">
             <select
               className="form-select"
@@ -177,7 +175,7 @@ const LeadList = () => {
             </select>
           </div>
 
-          {/* Reset button */}
+          {}
           <div className="col-12 col-sm-4 col-md-1 d-grid">
             <button
               type="button"
@@ -192,7 +190,7 @@ const LeadList = () => {
 
       {error && <div className="alert alert-danger">{error}</div>}
 
-      {/* Leads Table */}
+      {}
       <div className="card shadow-sm border-0 mb-4">
         <div className="card-body p-0">
           <div className="table-responsive">
@@ -276,7 +274,7 @@ const LeadList = () => {
         </div>
       </div>
 
-      {/* Pagination controls */}
+      {}
       {totalPages > 1 && (
         <nav className="d-flex justify-content-center">
           <ul className="pagination shadow-sm">

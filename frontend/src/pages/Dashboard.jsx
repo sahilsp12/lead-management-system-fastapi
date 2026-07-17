@@ -46,7 +46,7 @@ const Dashboard = () => {
         <p className="text-muted">Here is the latest status of your leads.</p>
       </div>
 
-      {/* Overview Cards */}
+      {}
       <div className="row g-4 mb-4">
         <div className="col-12 col-sm-6 col-md-4">
           <div className="card shadow-sm border-0 bg-primary text-white h-100">
@@ -58,7 +58,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Status Count Mini Summary */}
+        {}
         <div className="col-12 col-sm-6 col-md-4">
           <div className="card shadow-sm border-0 h-100">
             <div className="card-body p-4">
@@ -81,7 +81,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Source Count Mini Summary */}
+        {}
         <div className="col-12 col-sm-6 col-md-4">
           <div className="card shadow-sm border-0 h-100">
             <div className="card-body p-4">
@@ -104,7 +104,7 @@ const Dashboard = () => {
       </div>
 
       <div className="row g-4">
-        {/* Recent Leads Table */}
+        {}
         <div className="col-12 col-lg-8">
           <div className="card shadow-sm border-0">
             <div className="card-header bg-white py-3 d-flex justify-content-between align-items-center">
@@ -155,7 +155,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Shortcuts / Actions */}
+        {}
         <div className="col-12 col-lg-4">
           <div className="card shadow-sm border-0">
             <div className="card-header bg-white py-3">

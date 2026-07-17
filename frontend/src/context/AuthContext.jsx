@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user and token exist in storage
+    
     const storedUser = localStorage.getItem('user');
     const token = localStorage.getItem('token');
     
@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
       try {
         setUser(JSON.parse(storedUser));
       } catch (e) {
-        // If stored data is invalid JSON, clear it
+        
         localStorage.removeItem('user');
         localStorage.removeItem('token');
       }

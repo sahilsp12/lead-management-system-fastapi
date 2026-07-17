@@ -5,12 +5,11 @@ import { AuthContext } from '../context/AuthContext';
 import { getErrorMessage } from '../utils/errors';
 
 const LeadForm = () => {
-  const { leadId } = useParams(); // undefined if creating
+  const { leadId } = useParams(); 
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const isEdit = !!leadId;
 
-  // Form Fields
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -19,22 +18,19 @@ const LeadForm = () => {
   const [notes, setNotes] = useState('');
   const [assignedTo, setAssignedTo] = useState('');
 
-  // Dropdown options
   const [agents, setAgents] = useState([]);
 
-  // UI States
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [importing, setImporting] = useState(false);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    // 1. Fetch agents list if Manager or Admin to populate assignment dropdown
+    
     if (user?.role === 'Manager' || user?.role === 'Admin') {
       fetchAgents();
     }
 
-    // 2. Fetch lead details if editing
     if (isEdit) {
       fetchLeadDetails();
     }
@@ -42,19 +38,10 @@ const LeadForm = () => {
 
   const fetchAgents = async () => {
     try {
-      // Admins can list all users. For Managers, we will fetch users list
-      // Note: users_router list_users is admin_only in current backend.
-      // So if the logged-in user is a Manager, let's gracefully fallback or fetch.
-      // Wait, is there a risk of Manager getting 403 when listing users?
-      // In users.py: router.get("/", response_model=list[UserOut], dependencies=[Depends(admin_only)])
-      // Yes, listing users is admin_only. So for Manager, we can't show a dropdown of agents unless we have a manager endpoint,
-      // or we can allow the backend to assign, or we just type agent ID manually, or query agents specifically.
-      // Since it's a simple CRUD, we can let managers type the Agent User ID in an input field, which is extremely simple, 
-      // or let Admin use a dropdown. Let's make it a simple text/number input for Manager and Admin, or fetch users only if Admin!
-      // This is very clean, avoids 403 errors, and is easy to explain.
+
       if (user.role === 'Admin') {
         const response = await api.get('/users/');
-        // Filter users who are Agents
+        
         const agentUsers = response.data.filter(u => u.role === 'Agent');
         setAgents(agentUsers);
       }
@@ -89,14 +76,14 @@ const LeadForm = () => {
 
     try {
       if (isEdit) {
-        // Prepare update payload
+        
         const payload = {};
         if (user.role === 'Agent') {
-          // Agents can only update status and notes
+          
           payload.status = status;
           payload.notes = notes;
         } else {
-          // Admin/Manager can edit all fields
+          
           payload.name = name;
           payload.email = email;
           payload.phone = phone;
@@ -109,7 +96,7 @@ const LeadForm = () => {
         await api.put(`/leads/${leadId}`, payload);
         navigate(`/leads/${leadId}`);
       } else {
-        // Create new lead manually
+        
         const payload = {
           name,
           email,
@@ -128,7 +115,6 @@ const LeadForm = () => {
     }
   };
 
-  // Integration of Third-Party API Import
   const handleImportRandom = async () => {
     setError('');
     setImporting(true);
@@ -166,7 +152,7 @@ const LeadForm = () => {
           {isEdit ? (user.role === 'Agent' ? 'Update Lead Status' : 'Edit Lead') : 'Create Lead'}
         </h1>
         
-        {/* Import Random Lead - only visible when creating, for Admin/Manager */}
+        {}
         {!isEdit && (user?.role === 'Manager' || user?.role === 'Admin') && (
           <button
             type="button"
@@ -188,9 +174,9 @@ const LeadForm = () => {
 
       <div className="card shadow-sm border-0 p-4">
         <form onSubmit={handleSubmit}>
-          {/* Read Only Field checks for Agents */}
+          {}
           {user.role === 'Agent' && isEdit ? (
-            // Layout for Agents editing assigned lead (restrict to status/notes)
+            
             <>
               <div className="alert alert-light border py-2 mb-3">
                 <strong>Lead Info (Read Only for Agents):</strong>
@@ -200,7 +186,7 @@ const LeadForm = () => {
               </div>
             </>
           ) : (
-            // Full inputs for Managers/Admins or when creating
+            
             <>
               <div className="mb-3">
                 <label className="form-label">Full Name</label>
@@ -254,7 +240,7 @@ const LeadForm = () => {
             </>
           )}
 
-          {/* Status (Editable by all roles) */}
+          {}
           <div className="mb-3">
             <label className="form-label">Lead Status</label>
             <select
@@ -270,7 +256,7 @@ const LeadForm = () => {
             </select>
           </div>
 
-          {/* Notes (Editable by all roles) */}
+          {}
           <div className="mb-3">
             <label className="form-label">Notes</label>
             <textarea
@@ -282,7 +268,7 @@ const LeadForm = () => {
             ></textarea>
           </div>
 
-          {/* Assigned To - only visible/editable for Admin and Manager during Edit */}
+          {}
           {isEdit && (user.role === 'Admin' || user.role === 'Manager') && (
             <div className="mb-4">
               <label className="form-label">Assign Agent</label>

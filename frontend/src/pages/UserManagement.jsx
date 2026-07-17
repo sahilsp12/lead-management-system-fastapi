@@ -8,7 +8,6 @@ const UserManagement = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  // Create User Form fields
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -75,7 +74,7 @@ const UserManagement = () => {
       {success && <div className="alert alert-success">{success}</div>}
 
       <div className="row g-4">
-        {/* Left Side: Create User Form */}
+        {}
         <div className="col-12 col-md-4">
           <div className="card shadow-sm border-0 p-3">
             <div className="card-body">
@@ -145,7 +144,7 @@ const UserManagement = () => {
           </div>
         </div>
 
-        {/* Right Side: Users List Table */}
+        {}
         <div className="col-12 col-md-8">
           <div className="card shadow-sm border-0">
             <div className="card-header bg-white py-3">

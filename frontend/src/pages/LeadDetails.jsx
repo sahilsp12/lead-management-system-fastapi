@@ -25,28 +25,9 @@ const LeadDetails = () => {
       const leadData = response.data;
       setLead(leadData);
 
-      // Fetch agent name if assigned_to is present
       if (leadData.assigned_to) {
         try {
-          // If we are admin/manager we can list/view users, else we will fetch
-          // But wait, the list_users endpoint is admin only.
-          // Let's just fallback to "Agent ID: X" or if we have user context
-          // Wait, is there a simpler way? The backend could return the agent name or
-          // we can query an endpoint. But wait, in our leads.py backend:
-          // lead relationship `agent` links to the User model.
-          // In LeadOut schema:
-          // class LeadOut(LeadBase):
-          //     id: int
-          //     assigned_to: Optional[int] = None
-          //     created_by: Optional[int] = None
-          //     created_at: datetime
-          //     updated_at: datetime
-          //     activities: list[ActivityLogOut] = []
-          // It does not include agent details directly.
-          // So let's write a simple resolver, or since we know the agent ID,
-          // we can just display "Agent ID: X". Or wait! In the activity logs description,
-          // the backend writes the agent's name like "auto-assigned to Test Agent".
-          // Let's just show "Agent ID: X" in details, which is clean and database-native.
+
           setAgentName(`Agent ID: ${leadData.assigned_to}`);
         } catch (uErr) {
           setAgentName(`Agent ID: ${leadData.assigned_to}`);
@@ -111,7 +92,7 @@ const LeadDetails = () => {
       </div>
 
       <div className="row g-4">
-        {/* Left Side: Details Card */}
+        {}
         <div className="col-12 col-md-6">
           <div className="card shadow-sm border-0 h-100 p-3">
             <div className="card-body">
@@ -170,7 +151,7 @@ const LeadDetails = () => {
           </div>
         </div>
 
-        {/* Right Side: Activity Timeline */}
+        {}
         <div className="col-12 col-md-6">
           <div className="card shadow-sm border-0 h-100 p-3">
             <div className="card-body">

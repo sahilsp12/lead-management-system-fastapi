@@ -7,7 +7,6 @@ const api = axios.create({
   },
 });
 
-// Interceptor to inject token into requests automatically
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -21,14 +20,13 @@ api.interceptors.request.use(
   }
 );
 
-// Interceptor to handle authentication failures (401)
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      // Optional: Redirect to login or let the context handle it
+      
       if (window.location.pathname !== '/login' && window.location.pathname !== '/register') {
         window.location.href = '/login';
       }
